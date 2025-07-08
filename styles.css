@@ -88,8 +88,7 @@ li {
   margin-bottom: 14px;
   border-radius: 16px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 10px;
   transition: box-shadow 0.2s ease;
 }
@@ -102,22 +101,17 @@ li span {
   font-size: 16px;
   font-weight: 500;
   color: #222;
-  flex-grow: 1;
-}
-
-li .actions {
-  display: flex;
-  gap: 8px;
 }
 
 li button {
-  padding: 4px 10px;
-  font-size: 13px;
+  width: fit-content;
+  padding: 6px 14px;
+  font-size: 14px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: 500;
   transition: 0.2s ease;
+  font-weight: 500;
 }
 
 li button.edit {
