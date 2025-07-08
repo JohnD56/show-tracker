@@ -49,36 +49,35 @@ function addEntry(show, episode, timestamp) {
 }
 const quotes = [
   {
-    text: "You endure what is unbearable, and you bear it. That is all.",
+    text: "I am catastrophically in love with you.",
     author: "Cassandra Clare, Clockwork Princess"
   },
   {
-    text: "I don’t need a protector. I need a partner.",
+    text: "You’re the only thing I’ve ever really wanted. You and all your contradictions.",
     author: "Rebecca Yarros, Fourth Wing"
   },
   {
-    text: "Love is the most powerful force in the world. That’s what makes it so dangerous.",
-    author: "Cassandra Clare, City of Glass"
-  },
-  {
-    text: "It’s not bravery if you’re not scared.",
-    author: "Rebecca Yarros, Fourth Wing"
-  },
-  {
-    text: "We live and breathe words.",
-    author: "Cassandra Clare, Clockwork Prince"
-  },
-  {
-    text: "The pain means you're alive. The scars mean you survived.",
+    text: "If there’s a war, I’d burn the world down just to make sure you survived it.",
     author: "Rebecca Yarros, Iron Flame"
+  },
+  {
+    text: "There is no pretending. I love you, and I will love you until I die.",
+    author: "Cassandra Clare, Clockwork Prince"
   }
 ];
 
+function displayRandomQuote() {
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  const quoteText = document.getElementById('quote-text');
+  const quoteAuthor = document.getElementById('quote-author');
+
+  if (quoteText && quoteAuthor) {
+    quoteText.textContent = `"${quote.text}"`;
+    quoteAuthor.textContent = `— ${quote.author}`;
+  }
+}
+
+// Wait until page is fully loaded
 window.onload = () => {
   displayRandomQuote();
 };
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
-  document.getElementById('quote-text').textContent = `"${quote.text}"`;
-  document.getElementById('quote-author').textContent = `— ${quote.author}`;
-}
-displayRandomQuote();
