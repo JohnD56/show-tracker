@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Show Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📺 Show Tracker</h1>
+    <form id="show-form">
+      <input type="text" id="show" placeholder="Show name" required />
+      <input type="text" id="episode" placeholder="Episode (e.g. S1E4)" required />
+      <input type="text" id="timestamp" placeholder="Timestamp (e.g. 12:35)" />
+      <button type="submit">Add Entry</button>
+    </form>
+
+    <h2>My Logs</h2>
+    <ul id="log-list"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
