@@ -47,41 +47,36 @@ function addEntry(show, episode, timestamp) {
     }
   });
 }
-.quote-box {
-  position: relative;
-  margin-top: 40px;
-  padding: 20px;
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.5);
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
+const quotes = [
+  {
+    text: "You endure what is unbearable, and you bear it. That is all.",
+    author: "Cassandra Clare, Clockwork Princess"
+  },
+  {
+    text: "I don’t need a protector. I need a partner.",
+    author: "Rebecca Yarros, Fourth Wing"
+  },
+  {
+    text: "Love is the most powerful force in the world. That’s what makes it so dangerous.",
+    author: "Cassandra Clare, City of Glass"
+  },
+  {
+    text: "It’s not bravery if you’re not scared.",
+    author: "Rebecca Yarros, Fourth Wing"
+  },
+  {
+    text: "We live and breathe words.",
+    author: "Cassandra Clare, Clockwork Prince"
+  },
+  {
+    text: "The pain means you're alive. The scars mean you survived.",
+    author: "Rebecca Yarros, Iron Flame"
+  }
+];
 
-.quote-box blockquote {
-  font-size: 16px;
-  font-style: italic;
-  margin-bottom: 10px;
-  color: #333;
-  z-index: 2;
-  position: relative;
+function displayRandomQuote() {
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  document.getElementById('quote-text').textContent = `"${quote.text}"`;
+  document.getElementById('quote-author').textContent = `— ${quote.author}`;
 }
-
-.quote-box cite {
-  font-size: 14px;
-  color: #555;
-  font-weight: 500;
-  z-index: 2;
-  position: relative;
-}
-
-.quote-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url('https://i.imgur.com/5IGxBtx.jpeg'); /* Replace with your image */
-  background-size: cover;
-  background-position: center;
-  filter: blur(12px) brightness(0.6);
-  z-index: 1;
-  opacity: 0.7;
-}
+displayRandomQuote();
