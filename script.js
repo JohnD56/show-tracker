@@ -47,22 +47,38 @@ function addEntry(show, episode, timestamp) {
     }
   });
 }
-function displayRandomQuote(quote) {
+const quotes = [
+  {
+    text: "I am catastrophically in love with you.",
+    author: "Cassandra Clare, Clockwork Princess"
+  },
+  {
+    text: "You’re the only thing I’ve ever really wanted. You and all your contradictions.",
+    author: "Rebecca Yarros, Fourth Wing"
+  },
+  {
+    text: "If there’s a war, I’d burn the world down just to make sure you survived it.",
+    author: "Rebecca Yarros, Iron Flame"
+  },
+  {
+    text: "There is no pretending. I love you, and I will love you until I die.",
+    author: "Cassandra Clare, Clockwork Prince"
+  }
+];
+function displayRandomQuote() {
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
   const quoteText = document.getElementById('quote-text');
   const quoteAuthor = document.getElementById('quote-author');
+
+  if (!quoteText || !quoteAuthor) {
+    console.error("Missing quoteText or quoteAuthor element");
+    return;
+  }
 
   quoteText.textContent = `"${quote.text}"`;
   quoteAuthor.textContent = `— ${quote.author}`;
 }
-window.onload = () => {
+
 window.addEventListener('DOMContentLoaded', () => {
-  fetch('quotes.json')
-    .then(response => response.json())
-    .then(data => {
-      const randomQuote = data[Math.floor(Math.random() * data.length)];
-      displayQuote(randomQuote);
-    })
-    .catch(error => {
-      console.error('Failed to load quotes:', error);
-    });
+  displayRandomQuote();
 });
