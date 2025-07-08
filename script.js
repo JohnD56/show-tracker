@@ -74,7 +74,9 @@ const quotes = [
   }
 ];
 
-function displayRandomQuote() {
+window.onload = () => {
+  displayRandomQuote();
+};
   const quote = quotes[Math.floor(Math.random() * quotes.length)];
   document.getElementById('quote-text').textContent = `"${quote.text}"`;
   document.getElementById('quote-author').textContent = `— ${quote.author}`;
