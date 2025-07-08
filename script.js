@@ -65,19 +65,21 @@ const quotes = [
     author: "Cassandra Clare, Clockwork Prince"
   }
 ];
-
 function displayRandomQuote() {
   const quote = quotes[Math.floor(Math.random() * quotes.length)];
   const quoteText = document.getElementById('quote-text');
   const quoteAuthor = document.getElementById('quote-author');
 
-  if (quoteText && quoteAuthor) {
-    quoteText.textContent = `"${quote.text}"`;
-    quoteAuthor.textContent = `— ${quote.author}`;
+  if (!quoteText || !quoteAuthor) {
+    console.error("Missing quoteText or quoteAuthor element");
+    return;
   }
+
+  quoteText.textContent = `"${quote.text}"`;
+  quoteAuthor.textContent = `— ${quote.author}`;
 }
 
-// Wait until page is fully loaded
-window.onload = () => {
+window.addEventListener('DOMContentLoaded', () => {
   displayRandomQuote();
-};
+});
+
