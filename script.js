@@ -21,20 +21,16 @@ function addEntry(show, episode, timestamp) {
   textSpan.textContent = `${show} - ${episode}` + (timestamp ? ` @ ${timestamp}` : '');
 
   const editBtn = document.createElement('button');
-  editBtn.textContent = '✏️';
+  editBtn.textContent = '✏️ Edit';
   editBtn.className = 'edit';
 
   const deleteBtn = document.createElement('button');
-  deleteBtn.textContent = '❌';
+  deleteBtn.textContent = '❌ Delete';
   deleteBtn.className = 'delete';
 
-  const actions = document.createElement('div');
-  actions.className = 'actions';
-  actions.appendChild(editBtn);
-  actions.appendChild(deleteBtn);
-
   listItem.appendChild(textSpan);
-  listItem.appendChild(actions);
+  listItem.appendChild(editBtn);
+  listItem.appendChild(deleteBtn);
   logList.appendChild(listItem);
 
   editBtn.addEventListener('click', () => {
