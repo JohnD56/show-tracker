@@ -195,3 +195,11 @@ li button.delete:hover {
   opacity: 0.5;
   z-index: 0;
 }
+.footer-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 16px;
+  font-style: italic;
+  user-select: none;
+}
