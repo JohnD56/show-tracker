@@ -54,7 +54,7 @@ function displayRandomQuote(quote) {
   quoteText.textContent = `"${quote.text}"`;
   quoteAuthor.textContent = `— ${quote.author}`;
 }
-
+window.onload = () => {
 window.addEventListener('DOMContentLoaded', () => {
   fetch('quotes.json')
     .then(response => response.json())
@@ -65,8 +65,4 @@ window.addEventListener('DOMContentLoaded', () => {
     .catch(error => {
       console.error('Failed to load quotes:', error);
     });
-window.onload = () => {
-window.addEventListener('DOMContentLoaded', () => {
-  displayRandomQuote();
-};
 });
