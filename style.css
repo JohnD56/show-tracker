@@ -191,7 +191,7 @@ li button.delete:hover {
   background-image: url('https://st4.depositphotos.com/9597538/39053/i/450/depositphotos_390538724-stock-photo-dark-blue-gradient-background-texture.jpg'); /* change if you want */
   background-size: cover;
   background-position: center;
-  filter: blur(16px) brightness(1); /* brighter and softer */
+  filter: blur(16px) brightness(1.4); /* brighter and softer */
   opacity: 0.5;
   z-index: 0;
 }
