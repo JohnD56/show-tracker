@@ -65,4 +65,8 @@ window.addEventListener('DOMContentLoaded', () => {
     .catch(error => {
       console.error('Failed to load quotes:', error);
     });
+window.onload = () => {
+window.addEventListener('DOMContentLoaded', () => {
+  displayRandomQuote();
+};
 });
