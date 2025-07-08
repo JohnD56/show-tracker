@@ -146,3 +146,41 @@ li button.delete:hover {
     font-size: 14px;
   }
 }
+.quote-box {
+  position: relative;
+  margin-top: 40px;
+  padding: 20px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quote-box blockquote {
+  font-size: 16px;
+  font-style: italic;
+  margin-bottom: 10px;
+  color: #333;
+  z-index: 2;
+  position: relative;
+}
+
+.quote-box cite {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+  z-index: 2;
+  position: relative;
+}
+
+.quote-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://i.imgur.com/5IGxBtx.jpeg'); /* Replace with your image */
+  background-size: cover;
+  background-position: center;
+  filter: blur(12px) brightness(0.6);
+  z-index: 1;
+  opacity: 0.7;
+}
