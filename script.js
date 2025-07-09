@@ -1,6 +1,25 @@
 const form = document.getElementById('show-form');
 const logList = document.getElementById('log-list');
 
+let entries = [];
+
+// ✅ Save to localStorage
+function saveEntries() {
+  localStorage.setItem('watchLogs', JSON.stringify(entries));
+}
+
+// ✅ Load from localStorage
+function loadEntries() {
+  const saved = localStorage.getItem('watchLogs');
+  entries = saved ? JSON.parse(saved) : [];
+}
+
+// ✅ Render all entries
+function renderEntries() {
+  logList.innerHTML = '';
+  entries.forEach((entry, index) => addEntry(entry.show, entry.episode, entry.timestamp, index));
+}
+
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
@@ -9,12 +28,16 @@ form.addEventListener('submit', function (e) {
   const timestamp = document.getElementById('timestamp').value.trim();
 
   if (show && episode) {
-    addEntry(show, episode, timestamp);
+    const newEntry = { show, episode, timestamp };
+    entries.push(newEntry);
+    saveEntries();
+    renderEntries();
     form.reset();
   }
 });
 
-function addEntry(show, episode, timestamp) {
+// ✅ Modified to accept index (for edit/delete)
+function addEntry(show, episode, timestamp, index) {
   const listItem = document.createElement('li');
 
   const textSpan = document.createElement('span');
@@ -34,20 +57,26 @@ function addEntry(show, episode, timestamp) {
   logList.appendChild(listItem);
 
   editBtn.addEventListener('click', () => {
-    const newEpisode = prompt('Update Episode:', episode);
-    const newTimestamp = prompt('Update Timestamp (optional):', timestamp);
+    const newEpisode = prompt('Update Episode:', entries[index].episode);
+    const newTimestamp = prompt('Update Timestamp (optional):', entries[index].timestamp);
     if (newEpisode !== null) {
-      textSpan.textContent = `${show} - ${newEpisode}` + (newTimestamp ? ` @ ${newTimestamp}` : '');
+      entries[index].episode = newEpisode.trim();
+      entries[index].timestamp = newTimestamp ? newTimestamp.trim() : '';
+      saveEntries();
+      renderEntries();
     }
   });
 
   deleteBtn.addEventListener('click', () => {
     if (confirm('Delete this entry?')) {
-      listItem.remove();
+      entries.splice(index, 1);
+      saveEntries();
+      renderEntries();
     }
   });
 }
 
+// ✅ QUOTE SECTION (unchanged)
 function displayRandomQuote(data) {
   const quote = data[Math.floor(Math.random() * data.length)];
   const quoteText = document.getElementById('quote-text');
@@ -59,7 +88,13 @@ function displayRandomQuote(data) {
   }
 }
 
+// ✅ INITIAL LOAD
 window.addEventListener('DOMContentLoaded', () => {
+  // Load and render watch logs
+  loadEntries();
+  renderEntries();
+
+  // Load quote
   fetch('quotes.json')
     .then(response => {
       if (!response.ok) throw new Error('Failed to fetch quotes.json');
