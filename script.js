@@ -75,34 +75,58 @@ function addEntry(show, episode, timestamp, index) {
     }
   });
 }
+let quoteIndex = 0;
+let allQuotes = [];
 
-// ✅ QUOTE SECTION (unchanged)
-function displayRandomQuote(data) {
-  const quote = data[Math.floor(Math.random() * data.length)];
+function showQuoteWithFade(quote) {
   const quoteText = document.getElementById('quote-text');
   const quoteAuthor = document.getElementById('quote-author');
 
-  if (quoteText && quoteAuthor) {
+  if (!quoteText || !quoteAuthor) return;
+
+  // Add fade-out
+  quoteText.classList.add('fade-out');
+  quoteAuthor.classList.add('fade-out');
+
+  setTimeout(() => {
     quoteText.textContent = `"${quote.text}"`;
     quoteAuthor.textContent = `— ${quote.author}`;
-  }
+
+    // Fade back in
+    quoteText.classList.remove('fade-out');
+    quoteAuthor.classList.remove('fade-out');
+    quoteText.classList.add('fade-in');
+    quoteAuthor.classList.add('fade-in');
+
+    // Remove the fade-in class after animation completes
+    setTimeout(() => {
+      quoteText.classList.remove('fade-in');
+      quoteAuthor.classList.remove('fade-in');
+    }, 500);
+  }, 300); // match fade-out duration
 }
 
-// ✅ INITIAL LOAD
+function startQuoteRotation(quotes) {
+  allQuotes = quotes;
+
+  // Immediately show first quote
+  showQuoteWithFade(allQuotes[quoteIndex]);
+
+  setInterval(() => {
+    quoteIndex = (quoteIndex + 1) % allQuotes.length;
+    showQuoteWithFade(allQuotes[quoteIndex]);
+  }, 10000); // every 10 seconds
+}
+
 window.addEventListener('DOMContentLoaded', () => {
-  // Load and render watch logs
+  // Load watch logs
   loadEntries();
   renderEntries();
 
-  // Load quote
+  // Load and rotate quotes
   fetch('quotes.json')
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to fetch quotes.json');
-      return response.json();
-    })
-    .then(data => {
-      displayRandomQuote(data);
-    })
+    .then(response => response.json())
+    .then(data => startQuoteRotation(data))
     .catch(error => {
       console.error('Quote fetch failed:', error);
       document.getElementById('quote-text').textContent = "Couldn't load quote.";
