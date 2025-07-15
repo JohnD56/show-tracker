@@ -214,3 +214,16 @@ li button.delete:hover {
   opacity: 1;
   transition: opacity 0.5s ease-in;
 }
+.thumbnail {
+  width: 120px;
+  height: auto;
+  margin-left: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+}
+
+.thumbnail:hover {
+  transform: scale(1.05);
+}
