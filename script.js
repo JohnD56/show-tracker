@@ -42,11 +42,11 @@ function addEntry(show, episode, timestamp, video, index) {
   const listItem = document.createElement('li');
 
   const textSpan = document.createElement('span');
-  textSpan.innerHTML =
-    `${show}` +
-    (episode ? ` - ${episode}` : '') +
-    (timestamp ? ` @ ${timestamp}` : '') +
-    (video ? ` — <a href="${video}" target="_blank" rel="noopener noreferrer">Watch</a>` : '');
+textSpan.innerHTML =
+  `${show}` +
+  (episode ? ` - ${episode}` : '') +
+  (timestamp ? ` @ ${timestamp}` : '') +
+  (video ? ` — <a href="${video}" target="_blank" rel="noopener noreferrer">Watch</a>` : '');
 
   const editBtn = document.createElement('button');
   editBtn.textContent = '✏️ Edit';
