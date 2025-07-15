@@ -17,18 +17,19 @@ function loadEntries() {
 // ✅ Render all entries
 function renderEntries() {
   logList.innerHTML = '';
-  entries.forEach((entry, index) => addEntry(entry.show, entry.episode, entry.timestamp, index));
+  entries.forEach((entry, index) => addEntry(entry.show, entry.episode, entry.timestamp, entry.video, index));
 }
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
   const show = document.getElementById('show').value.trim();
-  const episode = document.getElementById('episode').value.trim();
-  const timestamp = document.getElementById('timestamp').value.trim();
+  const episode = document.getElementById('episode').value.trim(); // optional
+  const timestamp = document.getElementById('timestamp').value.trim(); // optional
+  const video = document.getElementById('video').value.trim(); // optional
 
-  if (show && episode) {
-    const newEntry = { show, episode, timestamp };
+  if (show) {
+    const newEntry = { show, episode, timestamp, video };
     entries.push(newEntry);
     saveEntries();
     renderEntries();
@@ -36,12 +37,16 @@ form.addEventListener('submit', function (e) {
   }
 });
 
-// ✅ Modified to accept index (for edit/delete)
-function addEntry(show, episode, timestamp, index) {
+// ✅ Add a single entry to the DOM
+function addEntry(show, episode, timestamp, video, index) {
   const listItem = document.createElement('li');
 
   const textSpan = document.createElement('span');
-  textSpan.textContent = `${show} - ${episode}` + (timestamp ? ` @ ${timestamp}` : '');
+  textSpan.innerHTML =
+    `${show}` +
+    (episode ? ` - ${episode}` : '') +
+    (timestamp ? ` @ ${timestamp}` : '') +
+    (video ? ` — <a href="${video}" target="_blank" rel="noopener noreferrer">Watch</a>` : '');
 
   const editBtn = document.createElement('button');
   editBtn.textContent = '✏️ Edit';
@@ -56,17 +61,22 @@ function addEntry(show, episode, timestamp, index) {
   listItem.appendChild(deleteBtn);
   logList.appendChild(listItem);
 
+  // ✅ Edit function
   editBtn.addEventListener('click', () => {
-    const newEpisode = prompt('Update Episode:', entries[index].episode);
-    const newTimestamp = prompt('Update Timestamp (optional):', entries[index].timestamp);
+    const newEpisode = prompt('Update Episode (optional):', entries[index].episode || '');
+    const newTimestamp = prompt('Update Timestamp (optional):', entries[index].timestamp || '');
+    const newVideo = prompt('Update Video Link (optional):', entries[index].video || '');
+
     if (newEpisode !== null) {
       entries[index].episode = newEpisode.trim();
       entries[index].timestamp = newTimestamp ? newTimestamp.trim() : '';
+      entries[index].video = newVideo ? newVideo.trim() : '';
       saveEntries();
       renderEntries();
     }
   });
 
+  // ✅ Delete function
   deleteBtn.addEventListener('click', () => {
     if (confirm('Delete this entry?')) {
       entries.splice(index, 1);
@@ -75,6 +85,8 @@ function addEntry(show, episode, timestamp, index) {
     }
   });
 }
+
+// ✅ QUOTE SECTION
 let quoteIndex = 0;
 let allQuotes = [];
 
@@ -98,32 +110,31 @@ function showQuoteWithFade(quote) {
     quoteText.classList.add('fade-in');
     quoteAuthor.classList.add('fade-in');
 
-    // Remove the fade-in class after animation completes
+    // Remove fade-in class after animation
     setTimeout(() => {
       quoteText.classList.remove('fade-in');
       quoteAuthor.classList.remove('fade-in');
     }, 500);
-  }, 300); // match fade-out duration
+  }, 300);
 }
 
 function startQuoteRotation(quotes) {
   allQuotes = quotes;
 
-  // Immediately show first quote
+  // Show first quote
   showQuoteWithFade(allQuotes[quoteIndex]);
 
   setInterval(() => {
     quoteIndex = (quoteIndex + 1) % allQuotes.length;
     showQuoteWithFade(allQuotes[quoteIndex]);
-  }, 10000); // every 10 seconds
+  }, 10000);
 }
 
+// ✅ Initial Load
 window.addEventListener('DOMContentLoaded', () => {
-  // Load watch logs
   loadEntries();
   renderEntries();
 
-  // Load and rotate quotes
   fetch('quotes.json')
     .then(response => response.json())
     .then(data => startQuoteRotation(data))
