@@ -42,11 +42,26 @@ function addEntry(show, episode, timestamp, video, index) {
   const listItem = document.createElement('li');
 
   const textSpan = document.createElement('span');
+let videoHTML = '';
+if (video) {
+  const youtubeMatch = video.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]{11})/);
+  if (youtubeMatch) {
+    const videoId = youtubeMatch[1];
+    const thumbnailURL = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    videoHTML = ` — <a href="${video}" target="_blank" rel="noopener noreferrer">
+                   <img class="thumbnail" src="${thumbnailURL}" alt="Video thumbnail">
+                 </a>`;
+  } else {
+    // fallback to basic link
+    videoHTML = ` — <a href="${video}" target="_blank" rel="noopener noreferrer">Watch</a>`;
+  }
+}
 textSpan.innerHTML =
   `${show}` +
   (episode ? ` - ${episode}` : '') +
   (timestamp ? ` @ ${timestamp}` : '') +
-  (video ? ` — <a href="${video}" target="_blank" rel="noopener noreferrer">Watch</a>` : '');
+  videoHTML;
+
 
   const editBtn = document.createElement('button');
   editBtn.textContent = '✏️ Edit';
